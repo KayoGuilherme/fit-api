@@ -10,7 +10,7 @@ datasource db {
 model Usuarios {
   id              Int          @id @default(autoincrement())
   nome            String       @db.VarChar(120)
-  CPF             String       @db.VarChar(11)
+  CPF             String       @db.VarChar(11) @unique
   numero_telefone String?      @db.VarChar(12)
   senha           String
   active          Boolean
@@ -33,7 +33,7 @@ model Inscricoes {
   usuarioId   Int
   planoId     Int
   data_inicio DateTime @default(now())
-  data_fim    DateTime
+  data_fim    String
   Usuario     Usuarios @relation(fields: [usuarioId], references: [id])
   Plano       Planos   @relation(fields: [planoId], references: [id])
 }

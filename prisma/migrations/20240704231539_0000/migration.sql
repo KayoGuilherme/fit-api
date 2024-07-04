@@ -29,10 +29,13 @@ CREATE TABLE "Inscricoes" (
     "usuarioId" INTEGER NOT NULL,
     "planoId" INTEGER NOT NULL,
     "data_inicio" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "data_fim" TIMESTAMP(3) NOT NULL,
+    "data_fim" TEXT NOT NULL,
 
     CONSTRAINT "Inscricoes_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Usuarios_CPF_key" ON "Usuarios"("CPF");
 
 -- AddForeignKey
 ALTER TABLE "Inscricoes" ADD CONSTRAINT "Inscricoes_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
