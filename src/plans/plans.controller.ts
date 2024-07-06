@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, UseGuards } from '@nestjs/common';
 import { PlansService } from './plans.service';
 import { Paramid } from 'src/decorators/param-id.decorator';
 import { RegisterPlansDto } from './dtos/register-plans.dto';
 import { UpdatePlanDto } from './dtos/update-plan.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+
+@UseGuards(AuthGuard)
 @Controller('plans')
 export class PlansController {
   constructor(private readonly plansService: PlansService) {}
@@ -34,8 +37,8 @@ export class PlansController {
     );
   }
 
-  @Delete(":id")
+  @Delete(':id')
   async deletePlan(@Paramid() id: number) {
-    return this.plansService.deletePlan(id)
+    return this.plansService.deletePlan(id);
   }
 }

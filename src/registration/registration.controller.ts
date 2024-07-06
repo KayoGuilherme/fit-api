@@ -6,12 +6,16 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { RegistrationService } from './registration.service';
 import { Paramid } from 'src/decorators/param-id.decorator';
 import { registerRegistrationDto } from './dtos/register-registration.dto';
 import { updateInscriptionDto } from './dtos/update-inscription.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+
+@UseGuards(AuthGuard)
 @Controller('registration')
 export class RegistrationController {
   constructor(private readonly registrationService: RegistrationService) {}

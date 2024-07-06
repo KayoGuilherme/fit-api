@@ -1,6 +1,10 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ProfitService } from './profit.service';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+
+
+@UseGuards(AuthGuard)
 @Controller('profit')
 export class ProfitController {
   constructor(private readonly profitService: ProfitService) {}
