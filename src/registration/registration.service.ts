@@ -89,17 +89,17 @@ export class RegistrationService {
         },
       });
 
-      if (!getInscription)
+      if (!getInscription) {
         return new NotFoundException(
           'Inscrição não foi encontrada na base de dados',
         );
+      }
       return getInscription;
     } catch (error) {
       console.log(error);
       throw new BadRequestException('Erro interno do servidor', error);
     }
   }
-
   async updateInscription(
     { usuarioId, planoId, data_inicio, data_fim }: updateInscriptionDto,
     id: number,
@@ -156,4 +156,6 @@ export class RegistrationService {
       throw new BadRequestException('Erro interno do servidor', error);
     }
   }
+
+  
 }

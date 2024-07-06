@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { RegistrationService } from './registration.service';
 import { Paramid } from 'src/decorators/param-id.decorator';
 import { registerRegistrationDto } from './dtos/register-registration.dto';
@@ -18,9 +26,7 @@ export class RegistrationController {
   }
 
   @Post()
-  async createInscription(
-    @Body() data: registerRegistrationDto,
-  ) {
+  async createInscription(@Body() data: registerRegistrationDto) {
     return this.registrationService.createInscription(data);
   }
 
@@ -39,4 +45,6 @@ export class RegistrationController {
   async deleteInscription(id: number) {
     return this.registrationService.deleteInscription(id);
   }
+
+  
 }
