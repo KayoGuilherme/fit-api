@@ -5,9 +5,10 @@ import { PrismaClient } from '@prisma/client';
 import { UsersModule } from 'src/users/users.module';
 import { PlansModule } from 'src/plans/plans.module';
 import { UsersService } from 'src/users/users.service';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [UsersModule, PlansModule],
+  imports: [UsersModule, PlansModule, AuthModule],
   controllers: [RegistrationController],
   providers: [RegistrationService, PrismaClient, UsersService],
 })

@@ -29,37 +29,49 @@ export class ProfitService {
     }
   }
 
-  async calcularLucroPorAlunoMesAno(
+  async getUserProfits(
     usuarioId: number,
-    mes: number,
-    ano: number,
-  ) {
-    try {
-      const inicioMes = new Date(ano, mes - 1, 1);
-      const fimMes = new Date(ano, mes, 0, 23, 59, 59, 999);
+    month: string,
+    year: string,
+  ){
+    // Formato esperado para month e year: '07' e '2024'
+    const startOfMonth = new Date(parseInt(year), parseInt(month) - 1, 1);
+    const endOfMonth = new Date(parseInt(year), parseInt(month), 0);
 
-      const inscricoes = await this.prisma.inscricoes.findMany({
-        where: {
-          usuarioId: usuarioId,
-          data_inicio: {
-            gte: inicioMes,
-            lte: fimMes,
-          },
+    // Calculando o lucro mensal
+    const monthlySubscriptions = await this.prisma.inscricoes.findMany({
+      where: {
+        usuarioId: Number(usuarioId),
+        data_inicio: {
+          gte: startOfMonth,
+          lte: endOfMonth,
         },
-        include: {
-          Plano: true,
-        },
-      });
+      },
+      include: {
+        Plano: true,
+      },
+    });
 
-      const lucroTotal = inscricoes.reduce(
-        (acc, inscricao) => acc + inscricao.Plano.valor,
-        0,
-      );
+    const monthlyProfit = monthlySubscriptions.reduce((acc, inscricao) => {
+      return acc + inscricao.Plano.valor;
+    }, 0);
 
-      return lucroTotal;
-    } catch (error) {
-      console.log(error);
-      throw new BadRequestException('Erro interno do servidor', error);
-    }
+    // Calculando o lucro total
+    const totalSubscriptions = await this.prisma.inscricoes.findMany({
+      where: {
+        usuarioId: Number(usuarioId),
+      },
+      include: {
+        Plano: true,
+      },
+    });
+
+    const totalProfit = totalSubscriptions.reduce((acc, inscricao) => {
+      return acc + inscricao.Plano.valor;
+    }, 0);
+
+    return { monthlyProfit, totalProfit };
   }
 }
+
+

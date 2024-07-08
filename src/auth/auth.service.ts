@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaClient, Usuarios } from '@prisma/client';
-import { UsersService } from 'src/users/users.service';
+
 import { LoginAuthDto } from './dto/create-auth.dto';
 import * as bcrypt from 'bcrypt';
 
@@ -13,7 +13,6 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(
     private readonly JWTService: JwtService,
-
     private readonly prisma: PrismaClient,
   ) {}
   createToken(user: Usuarios) {

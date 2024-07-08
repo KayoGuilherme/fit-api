@@ -31,8 +31,8 @@ export class UserDto {
   @IsNotEmpty()
   active: boolean;
 
-  @IsString()
-  total_pago: string;
+  @IsNumber()
+  roleId: number;
 
   @IsDate()
   data_inscricao: Date;

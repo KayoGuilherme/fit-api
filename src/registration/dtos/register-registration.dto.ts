@@ -3,6 +3,7 @@ import {
   IsDateString,
   IsNotEmpty,
   IsNumber,
+  IsString,
 } from 'class-validator';
 
 export class registerRegistrationDto {
@@ -14,8 +15,8 @@ export class registerRegistrationDto {
   @IsNotEmpty()
   planoId: number;
 
-  @IsDate()
-  data_inicio: Date;
+  @IsString()
+  data_inicio: string;
 
   @IsDateString()
   @IsNotEmpty()

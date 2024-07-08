@@ -25,8 +25,18 @@ export class RegistrationService {
       const plan = await this.plan.getPlanById(data.planoId);
       if (!plan) return new NotFoundException('Plano não encontrado.');
 
+      const dataInicio = new Date(data.data_inicio);
+      dataInicio.setHours(0, 0, 0, 0);
+
+      const dataFim = new Date(data.data_fim);
+      dataFim.setHours(23, 59, 59, 999); 
+
       const registration = await this.prisma.inscricoes.create({
-        data,
+        data: {
+          ...data,
+          data_inicio: dataInicio,
+          data_fim: dataFim
+        }
       });
 
       return registration;

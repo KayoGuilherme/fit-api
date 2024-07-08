@@ -8,15 +8,23 @@ datasource db {
 }
 
 model Usuarios {
-  id              Int          @id @default(autoincrement())
-  nome            String       @db.VarChar(120)
-  CPF             String       @db.VarChar(11) @unique
-  numero_telefone String?      @db.VarChar(12)
+  id              Int               @id @default(autoincrement())
+  nome            String            @db.VarChar(120)
+  CPF             String            @unique @db.VarChar(11)
+  numero_telefone String?           @db.VarChar(12)
   senha           String
   active          Boolean
-  total_pago      String?
-  data_inscricao  DateTime     @default(now())
+  data_inscricao  DateTime          @default(now())
+  roleId          Int @default(1)
+  role            RoleAuthorization @relation(fields: [roleId], references: [id_role])
   Inscricoes      Inscricoes[]
+}
+
+model RoleAuthorization {
+  id_role     Int        @id @default(autoincrement())
+  nome_role   String
+  description String
+  Usuarios    Usuarios[]
 }
 
 model Planos {
@@ -32,8 +40,8 @@ model Inscricoes {
   id          Int      @id @default(autoincrement())
   usuarioId   Int
   planoId     Int
-  data_inicio DateTime @default(now())
-  data_fim    String
+  data_inicio DateTime
+  data_fim    DateTime
   Usuario     Usuarios @relation(fields: [usuarioId], references: [id])
   Plano       Planos   @relation(fields: [planoId], references: [id])
 }

@@ -8,6 +8,6 @@ import { AuthModule } from 'src/auth/auth.module';
   imports: [forwardRef(() => AuthModule)],
   controllers: [UsersController],
   providers: [UsersService, PrismaClient],
-  exports:[UsersService]
+  exports: [UsersService],
 })
 export class UsersModule {}

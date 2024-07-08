@@ -15,22 +15,23 @@ import { Paramid } from 'src/decorators/param-id.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 
-
-@UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(AuthGuard)
   @Get()
   async getUser() {
     return this.usersService.getUsers();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':CPF')
   async getUsersByCpf(@ParamCPF() CPF: string) {
     return this.usersService.getUsersByCpf(CPF);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async getUsersById(@Paramid() id: number) {
     return this.usersService.getUsersById(id);
@@ -41,6 +42,7 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async updateUser(
     @Paramid() id: number,
@@ -55,6 +57,7 @@ export class UsersController {
     });
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async deleteUser(@Paramid() id: number) {
     return this.usersService.deleteUser(id);
